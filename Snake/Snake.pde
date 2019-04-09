@@ -1,12 +1,15 @@
-int x = 0;
-int y = 0;
+int x, y;
+PImage im;
  
 void setup(){
-  size (400, 400);  
+  size (600, 379);
+  im = loadImage("desert.jpg");
+  x = 0;
+  y = 0;
 }
  
 void draw(){
-  background(80);
+  background(im);
   rect(x, y, 25,25);
   keyPressed();
 }
