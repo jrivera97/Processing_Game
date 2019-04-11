@@ -1,15 +1,13 @@
-class Menu {
-  Menu() {
-  }
+class Snake {
   int x, y;
   PImage im;
   boolean coin;
   float coinX;
   float coinY;
   Coin c;
-
-  void setup() {
-    size (600, 379);
+  
+  // constructor
+  Snake() {
     im = loadImage("desert.jpg");
     x = 0;
     y = 0;
@@ -18,8 +16,8 @@ class Menu {
     coinY = height/2;
     c = new Coin(coinX, coinY, coin);
   }
-
-  void draw() {
+  
+  void moveSnake() {
     background(im);
     keyPressed();
     c.gotCoin();
