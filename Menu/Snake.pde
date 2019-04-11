@@ -22,6 +22,7 @@ class Snake {
     keyPressed();
     c.gotCoin();
     fill(255);
+    noStroke();
     rect(int(x/25)*25, int(y/25)*25, 25, 25);
   }
 
