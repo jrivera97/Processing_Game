@@ -1,5 +1,5 @@
 class Snake {
-  float x, y;
+  int x, y;
   PImage im;
   boolean coin;
   float coinX;
@@ -9,8 +9,8 @@ class Snake {
   int snakeLen = 1;
   int bodyIndex = 0;
   int newDir = -1;
-  ArrayList<Integer> ySpots;
-  ArrayList<Integer> xSpots;
+  ArrayList<Integer> ySpots = new ArrayList<Integer>();
+  ArrayList<Integer> xSpots = new ArrayList<Integer>();
   // constructor
   Snake() {
     im = loadImage("desert.jpg");
@@ -32,30 +32,11 @@ class Snake {
     snakeLen = c.getSnakeLen();
     System.out.println(snakeLen);
     bodyIndex = 0;
-    for (int i = 0; i < snakeLen; i++) {
-      //up
-      if (prev == 1) {
-        rect(int((x)/25)*25, int((y+bodyIndex)/25)*25, 25, 25);
-      }
-      //down
-      else if (prev == 2) {
-        rect(int((x)/25)*25, int((y-bodyIndex)/25)*25, 25, 25);
-      }
-
-      //left
-      else if (prev == 3) {
-        rect(int((x+bodyIndex)/25)*25, int((y)/25)*25, 25, 25);
-      }
-      //right
-      else if (prev == 4) {
-        rect(int((x-bodyIndex)/25)*25, int((y)/25)*25, 25, 25);
-      }
-      //start
-      else {
-        rect(int((x)/25)*25, int((y)/25)*25, 25, 25);
-      }
-      bodyIndex+=25;
+    if(snakeLen == 1) {
+      xSpots.add(0, x);
     }
+    rect(int((x)/25)*25, int((y)/25)*25, 25, 25);
+
 
     return res;
   }
@@ -64,16 +45,14 @@ class Snake {
 
 
     if (keyCode == UP) {
-      if (prev == 3) {
-        newDir = 0;
-      }
+
       //System.out.println("previnUp: " + prev);
       //check direction
       if (prev == 2) {
         //System.out.println("I cant do that");
         if (y + 1 > height) {
           y = 0;
-        }
+        } 
         //do not bounce else
         else {
           y += 1;
@@ -84,6 +63,10 @@ class Snake {
           y = height;
         } else {
           y -= 1;
+        }
+        for (int i = 0; i< snakeLen; i++)
+        {
+          
         }
         prev = 1;
       }
