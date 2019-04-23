@@ -2,7 +2,7 @@ class Coin {
   float coinX;
   float coinY;
   boolean coin;
-
+  float count;
   Coin(float coinX, float coinY, boolean coin) {
     this.coinX = coinX;
     this.coinY = coinY;
@@ -19,11 +19,14 @@ class Coin {
     rect(int(coinX/25)*25, int(coinY/25)*25, 25, 25);
   }
 
-  void gotCoin() {
-    if ((Math.abs(x - coinX)) < 10 && Math.abs(y - coinY) < 10)
+  float gotCoin(float x, float y) {
+    if ((Math.abs(int(x/25)*25 - int(coinX/25)*25)) < 10 && Math.abs(int(y/25)*25 - int(coinY/25)*25) < 10)
     {
+      count += 10;
       coin = false;
+      System.out.println(count);
     }
     placeCoin();
+  return count;
   }
 }

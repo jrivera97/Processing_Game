@@ -4,6 +4,7 @@ boolean level1Hover, level2Hover;
 PImage im;
 int x, y;
 Snake s;
+float count;
 
 void setup() {
   size (600, 379);
@@ -84,7 +85,15 @@ void draw() {
 
   // call code to play the game
   if (start) {
-    s.moveSnake();
+    float res = s.moveSnake();
+    if (res >= 40) {
+      String str = "Game Over \n you score: ";
+      str += res;
+      background(im);
+      textSize(65);
+      textAlign(CENTER, TOP);
+      text(str, width/2, 20);
+    }
     s.keyPressed();
 
     // implement levels

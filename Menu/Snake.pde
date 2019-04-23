@@ -1,11 +1,12 @@
 class Snake {
-  int x, y;
+  float x, y;
   PImage im;
   boolean coin;
   float coinX;
   float coinY;
   Coin c;
-  
+  int prev = 0;
+
   // constructor
   Snake() {
     im = loadImage("desert.jpg");
@@ -16,28 +17,95 @@ class Snake {
     coinY = height/2;
     c = new Coin(coinX, coinY, coin);
   }
-  
-  void moveSnake() {
+
+  float moveSnake() {
     background(im);
     keyPressed();
-    c.gotCoin();
+    float res = c.gotCoin(x, y);
+
     fill(255);
     noStroke();
     rect(int(x/25)*25, int(y/25)*25, 25, 25);
+    return res;
   }
 
   void keyPressed() {
-    //TODO: only allow these keys, do not turn around when opposite direction pressed
-    //minor bug fixes
-    //levels and border check
+
+
     if (keyCode == UP) {
-      y -= 1;
+      System.out.println("previnUp: " + prev);
+      //check direction
+      if (prev == 2) {
+        System.out.println("I cant do that");
+        if (y + 1 > height) {
+          y = 0;
+        } 
+        //do not bounce else
+        else {
+          y += 1;
+        }
+      } else {
+          System.out.println("I did it");
+        if (y - 1 < 0) {
+          y = height;
+        } else {
+          y -= 1;
+        }
+         prev = 1;
+      }
+     
     } else if (keyCode == DOWN) {
-      y += 1;
+    System.out.println("goin down");
+    System.out.println("previnDown: " + prev);
+      //check curr direction
+      if (prev ==1) {
+        if (y - 1 < 0) {
+          y = height;
+        } else {
+          y -= 1;
+        }
+      } else {
+        if (y + 1 > height) {
+          y = 0;
+        } else {
+          y += 1;
+        }
+        prev = 2;
+      }
+      
     } else if (keyCode == LEFT) {
-      x -= 1;
+      //check curr direction
+      if (prev == 4) {
+        if ( x+1 > width) {
+          x = 0;
+        } else {
+          x += 1;
+        }
+      } else {
+        if ( x-1 < 0) {
+          x = width;
+        } else {
+          x -= 1;
+        }
+        prev = 3;
+      }
+      
     } else if (keyCode == RIGHT) {
-      x += 1;
+      if (prev == 3) {
+        if ( x-1 < 0) {
+          x = width;
+        } else {
+          x -= 1;
+        }
+      } else {
+        if ( x+1 > width) {
+          x = 0;
+        } else {
+          x += 1;
+        }
+        prev = 4;
+      }
+      
     }
   }
 }
