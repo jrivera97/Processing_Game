@@ -3,12 +3,11 @@ class Coin {
   float coinY;
   boolean coin;
   float count;
-  int snakeLen;
-  Coin(float coinX, float coinY, boolean coin, int snakeLenIn) {
+
+  Coin(float coinX, float coinY, boolean coin) {
     this.coinX = coinX;
     this.coinY = coinY;
     this.coin = coin;
-    this.snakeLen = snakeLenIn;
   }
 
   void placeCoin() {
@@ -18,23 +17,18 @@ class Coin {
       coin = true;
     }
     fill(#F20C1C);
+    noStroke();
     rect(int(coinX/25)*25, int(coinY/25)*25, 25, 25);
   }
 
-  float gotCoin(float x, float y, int snakeLen) {
+  float gotCoin(float x, float y) {
     if ((Math.abs(int(x/25)*25 - int(coinX/25)*25)) < 10 && Math.abs(int(y/25)*25 - int(coinY/25)*25) < 10)
     {
-      System.out.println("here");
       bite.loop(1);
       count += 10;
-      snakeLen++;
       coin = false;
     }
     placeCoin();
     return count;
-  }
-
-  int getSnakeLen() {
-    return snakeLen;
   }
 }

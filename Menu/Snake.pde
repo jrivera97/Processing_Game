@@ -2,77 +2,110 @@ class Snake {
   int x, y;
   PImage im;
   boolean coin;
-  float coinX;
-  float coinY;
+  float coinX, coinY;
   Coin c;
-  int prev = 0;
-  int snakeLen = 1;
-  int bodyIndex = 0;
-  int newDir = -1;
+  int prev, snakeLen, bodyIndex, newDir;
   ArrayList<Integer> ySpots = new ArrayList<Integer>();
   ArrayList<Integer> xSpots = new ArrayList<Integer>();
+  ArrayList<snakeBody> sList = new ArrayList<snakeBody>();
+  float res;
+  float tempRes;
+  snakeBody s;
+
   // constructor
   Snake() {
     im = loadImage("desert.jpg");
-    x = 25;
-    y = 25;
+    x = 100;
+    y = 100;
+    prev = 0;
+    snakeLen = 3;
+    bodyIndex = 0;
+    newDir = -1;
+    res = 0;
+    tempRes = 0;
     coin = false;
     coinX = width/2;
     coinY = height/2;
-    c = new Coin(coinX, coinY, coin, snakeLen);
+    c = new Coin(coinX, coinY, coin);
+    //snake body
+
+    s = new snakeBody(x, y);
+    sList.add(s);
+    y-=25;
+    s = new snakeBody(x, y);
+    sList.add(s);
+    y-=25;
+    s = new snakeBody(x, y);
+    sList.add(s);
   }
 
   float moveSnake() {
     background(im);
-    keyPressed();
-    float res = c.gotCoin(x, y, snakeLen);
+
+
+    tempRes = res;
+    res = c.gotCoin(x, y);
+    if (tempRes != res) {
+      snakeLen++;
+      s = new snakeBody((int)x, (int)y);
+      sList.add(s);
+    }
 
     fill(255);
-    noStroke();
-    snakeLen = c.getSnakeLen();
-    System.out.println(snakeLen);
-    bodyIndex = 0;
-    if(snakeLen == 1) {
-      xSpots.add(0, x);
+
+    //if (snakeLen == 1) {
+    //  rect(int((x)/25)*25, int((y)/25)*25, 25, 25);
+    //}
+    // if snake is more than 1 box
+    //else {
+      
+      
+    for (int i = 0; i < sList.size(); i++) {
+      rect(int((sList.get(i).getX())/25)*25, int((sList.get(i).getY())/25)*25, 25, 25);
+      System.out.println(" y: " + int((sList.get(i).getY())/25)*25);
     }
-    rect(int((x)/25)*25, int((y)/25)*25, 25, 25);
-
-
+    
+    
+    //}
     return res;
   }
 
   void keyPressed() {
 
-
+    // UP
     if (keyCode == UP) {
 
-      //System.out.println("previnUp: " + prev);
       //check direction
       if (prev == 2) {
-        //System.out.println("I cant do that");
         if (y + 1 > height) {
           y = 0;
+          snakeBody temp = new snakeBody(x, (y+25));
+          sList.add(temp);
         } 
         //do not bounce else
         else {
           y += 1;
+          snakeBody temp = new snakeBody(x, (y-25));
+          sList.add(temp);
         }
       } else {
-        //System.out.println("I did it");
         if (y - 1 < 0) {
           y = height;
+          snakeBody temp = new snakeBody(x, (y-25));
+          sList.add(temp);
         } else {
           y -= 1;
-        }
-        for (int i = 0; i< snakeLen; i++)
-        {
-          
+          snakeBody temp = new snakeBody(x, (y+25));
+          sList.add(temp);
         }
         prev = 1;
       }
-    } else if (keyCode == DOWN) {
-      // System.out.println("goin down");
-      // System.out.println("previnDown: " + prev);
+      
+      //if (sList.size() > 1) {
+      //  sList.remove(snakeLen-1);
+    }
+    //DOWN
+    else if (keyCode == DOWN) {
       //check curr direction
       newDir = 2;
       if (prev ==1) {
@@ -89,8 +122,14 @@ class Snake {
         }
         prev = 2;
       }
-    } else if (keyCode == LEFT) {
-
+      snakeBody temp = new snakeBody(x, y);
+      sList.add(temp);
+      if (sList.size() > 1) {
+        //sList.remove(snakeLen);
+      }
+    }
+    //LEFT
+    else if (keyCode == LEFT) {
       //check curr direction
       if (prev == 4) {
         if ( x+1 > width) {
@@ -106,7 +145,14 @@ class Snake {
         }
         prev = 3;
       }
-    } else if (keyCode == RIGHT) {
+      snakeBody temp = new snakeBody(x, y);
+      sList.add(temp);
+      if (sList.size() > 1) {
+        //sList.remove(snakeLen);
+      }
+    }
+    //RIGHT
+    else if (keyCode == RIGHT) {
       if (prev == 3) {
         if ( x-1 < 0) {
           x = width;
@@ -120,6 +166,11 @@ class Snake {
           x += 1;
         }
         prev = 4;
+      }
+      snakeBody temp = new snakeBody(x, y);
+      sList.add(temp);
+      if (sList.size() > 1) {
+        //sList.remove(snakeLen);
       }
     }
   }
