@@ -3,10 +3,12 @@ class Coin {
   float coinY;
   boolean coin;
   float count;
-  Coin(float coinX, float coinY, boolean coin) {
+  int snakeLen;
+  Coin(float coinX, float coinY, boolean coin, int snakeLenIn) {
     this.coinX = coinX;
     this.coinY = coinY;
     this.coin = coin;
+    this.snakeLen = snakeLenIn;
   }
 
   void placeCoin() {
@@ -25,8 +27,13 @@ class Coin {
       count += 10;
       coin = false;
       System.out.println(count);
+      snakeLen++;
     }
     placeCoin();
   return count;
+  }
+  
+  int getSnakeLen() {
+    return snakeLen;
   }
 }
