@@ -33,10 +33,8 @@ class Snake {
 
 
     if (keyCode == UP) {
-      System.out.println("previnUp: " + prev);
       //check direction
       if (prev == 2) {
-        System.out.println("I cant do that");
         if (y + 1 > height) {
           y = 0;
         } 
@@ -45,18 +43,14 @@ class Snake {
           y += 1;
         }
       } else {
-          System.out.println("I did it");
         if (y - 1 < 0) {
           y = height;
         } else {
           y -= 1;
         }
-         prev = 1;
+        prev = 1;
       }
-     
     } else if (keyCode == DOWN) {
-    System.out.println("goin down");
-    System.out.println("previnDown: " + prev);
       //check curr direction
       if (prev ==1) {
         if (y - 1 < 0) {
@@ -72,7 +66,6 @@ class Snake {
         }
         prev = 2;
       }
-      
     } else if (keyCode == LEFT) {
       //check curr direction
       if (prev == 4) {
@@ -89,7 +82,6 @@ class Snake {
         }
         prev = 3;
       }
-      
     } else if (keyCode == RIGHT) {
       if (prev == 3) {
         if ( x-1 < 0) {
@@ -105,7 +97,6 @@ class Snake {
         }
         prev = 4;
       }
-      
     }
   }
 }

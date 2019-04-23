@@ -22,11 +22,12 @@ class Coin {
   float gotCoin(float x, float y) {
     if ((Math.abs(int(x/25)*25 - int(coinX/25)*25)) < 10 && Math.abs(int(y/25)*25 - int(coinY/25)*25) < 10)
     {
+      System.out.println("here");
+      bite.loop(1);
       count += 10;
       coin = false;
-      System.out.println(count);
     }
     placeCoin();
-  return count;
+    return count;
   }
 }

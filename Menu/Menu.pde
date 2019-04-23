@@ -1,20 +1,31 @@
 boolean startHover, quitHover;
 boolean start, quit;
 boolean level1Hover, level2Hover;
+boolean level1, level2;
 PImage im;
 int x, y;
 Snake s;
 float count;
+import ddf.minim.*; 
+AudioPlayer bite;
+AudioPlayer background;
+Minim minim;
 
 void setup() {
   size (600, 379);
   im = loadImage("desert.jpg");
+  minim = new Minim(this);
+  bite = minim.loadFile("Bite-Sound.mp3");
+  background = minim.loadFile("background.mp3");
+  
   startHover = false;
   quitHover = false;
   start = false;
   quit = false;
   level1Hover = false;
   level2Hover = false;
+  level1 = false;
+  level2 = false;
   s = new Snake();
 }
 
@@ -33,11 +44,22 @@ void draw() {
   }
   // check if mouse is over either level choice
   if (mouseX > 250 && mouseX < 350 && mouseY > 125 && mouseY < 200) {
-    level1Hover = true;
-    level2Hover = false;
+      level1Hover = true;
+      level2Hover = false;
   } else if (mouseX > 400 && mouseX < 500 && mouseY > 125 && mouseY < 200) {
+      level1Hover = false;
+      level2Hover = true;
+  } else {
     level1Hover = false;
-    level2Hover = true;
+    level2Hover = false;
+    if (level1) {
+      level1Hover = true;
+      level2Hover = false;
+    }
+    if (level2) {
+      level1Hover = false;
+      level2Hover = true;
+    }
   }
 
   textSize(65);
@@ -85,6 +107,7 @@ void draw() {
 
   // call code to play the game
   if (start) {
+    background.play();
     float res = s.moveSnake();
     if (res >= 40) {
       String str = "Game Over \n you score: ";
@@ -97,9 +120,11 @@ void draw() {
     s.keyPressed();
 
     // implement levels
-    if (level1Hover) {
+    if (level1) {
+      frameRate(50);
     }
-    if (level2Hover) {
+    if (level2) {
+      frameRate(100);
     }
   }
 }
@@ -113,5 +138,13 @@ void mouseClicked() {
   // if the user clicks quit
   if (quitHover) {
     exit();
+  }
+  // if the user clicks level 1
+  if (level1Hover) {
+    level1 = true;
+  }
+  // if the user clicks level 2
+  if (level2Hover) {
+    level2 = true;
   }
 }
