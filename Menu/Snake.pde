@@ -25,7 +25,7 @@ class Snake {
   float moveSnake() {
     background(im);
     keyPressed();
-    float res = c.gotCoin(x, y);
+    float res = c.gotCoin(x, y, snakeLen);
 
     fill(255);
     noStroke();

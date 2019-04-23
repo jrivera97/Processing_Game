@@ -21,12 +21,13 @@ class Coin {
     rect(int(coinX/25)*25, int(coinY/25)*25, 25, 25);
   }
 
-  float gotCoin(float x, float y) {
+  float gotCoin(float x, float y, int snakeLen) {
     if ((Math.abs(int(x/25)*25 - int(coinX/25)*25)) < 10 && Math.abs(int(y/25)*25 - int(coinY/25)*25) < 10)
     {
       System.out.println("here");
       bite.loop(1);
       count += 10;
+      snakeLen++;
       coin = false;
     }
     placeCoin();
